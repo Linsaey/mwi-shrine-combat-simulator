@@ -645,4 +645,168 @@
     #simulationResultColumn2 .row > div:nth-child(4) {
         white-space: nowrap;
     }
+
+    /* ===================== 模拟配置弹窗：标签 + 控件 一行 ===================== */
+    #startSimulationModal .row.mb-1 {
+        display: flex;
+        flex-wrap: nowrap;
+        align-items: center;
+        gap: 8px;
+        margin: 0 0 6px 0;
+    }
+
+    #startSimulationModal .row.mb-1 > .col-md-3 {
+        flex: 0 0 36%;
+        max-width: 36%;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        padding: 0;
+    }
+
+    #startSimulationModal .row.mb-1 > .col-md {
+        flex: 1 1 0%;
+        min-width: 0;
+        width: auto;
+        max-width: none;
+        padding: 0;
+    }
+
+    #startSimulationModal .row.mb-1 .input-group {
+        flex-wrap: nowrap;
+    }
+
+    /* ===================== 房屋弹窗：名称 + 输入框 一行 ===================== */
+    #houseRoomsList .row {
+        display: flex;
+        flex-wrap: nowrap;
+        align-items: center;
+        gap: 8px;
+        margin: 0 0 6px 0;
+    }
+
+    #houseRoomsList .row > .col-md-4 {
+        flex: 1 1 0%;
+        min-width: 0;
+        width: auto;
+        max-width: none;
+        margin-left: 0 !important;
+        padding: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    #houseRoomsList .row > .col-md-2 {
+        flex: 0 0 30%;
+        max-width: 30%;
+        padding: 0;
+    }
+
+    /* ===================== 装备方案弹窗：名称 + 加载/保存/删除 一行 ===================== */
+    #equipmentSetList .row {
+        display: flex;
+        flex-wrap: nowrap;
+        align-items: center;
+        gap: 6px;
+        margin: 0 0 6px 0;
+    }
+
+    #equipmentSetList .row > .col {
+        flex: 1 1 0%;
+        min-width: 0;
+        width: auto;
+        max-width: none;
+        padding: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    #equipmentSetList .row > .col-md-auto {
+        flex: 0 0 auto;
+        width: auto;
+        padding: 0;
+    }
+
+    #equipmentSetList .row > .col-md-auto .btn {
+        padding: 8px 10px;
+        min-height: 40px;
+        font-size: 14px;
+        white-space: nowrap;
+    }
+
+    /* 装备方案弹窗底部的"名称 + 输入框 + 创建"行：一行 */
+    #equipmentSetsModal .container-fluid > .row {
+        display: flex;
+        flex-wrap: nowrap;
+        align-items: center;
+        gap: 8px;
+        margin: 0 0 6px 0;
+    }
+
+    #equipmentSetsModal .container-fluid > .row > .col-md-auto:first-child {
+        flex: 0 0 auto;
+        width: auto;
+        white-space: nowrap;
+        padding: 0;
+    }
+
+    #equipmentSetsModal .container-fluid > .row > .col {
+        flex: 1 1 0%;
+        min-width: 0;
+        width: auto;
+        max-width: none;
+        padding: 0;
+    }
+
+    #equipmentSetsModal .container-fluid > .row > .col-md-auto:last-child {
+        flex: 0 0 auto;
+        width: auto;
+        padding: 0;
+    }
+
+    /* ===================== 公会神龛弹窗：神龕/效果/目前等級/測試等級 一行 ===================== */
+    #guildCombatBuffsList .row {
+        display: flex;
+        flex-wrap: nowrap;
+        align-items: center;
+        gap: 6px;
+        margin: 0 0 6px 0;
+    }
+
+    #guildCombatBuffsList .row > .col-md-3 {
+        flex: 0 0 24%;
+        max-width: 24%;
+        padding: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    #guildCombatBuffsList .row > .col-md-5 {
+        flex: 1 1 0%;
+        min-width: 0;
+        width: auto;
+        max-width: none;
+        padding: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    #guildCombatBuffsList .row > .col-md-2 {
+        flex: 0 0 22%;
+        max-width: 22%;
+        padding: 0;
+    }
+
+    #guildCombatBuffsList .row > .col-md-2:last-child {
+        flex: 0 0 24%;
+        max-width: 24%;
+    }
+
+    #guildCombatBuffsList .row > .col-md-2 input {
+        min-height: 40px;
+    }
 }
