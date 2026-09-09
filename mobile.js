@@ -31,4 +31,39 @@
     } else if (mq.addListener) {
         mq.addListener(syncPlayerTabs);
     }
+
+    // 手机端：把"利润 / 期望利润（No RNG Profit）"两行移到黑暗模式开关下方，
+    // 使其显示在模拟结果上方，减少滚动查找；桌面端不移动。
+    function moveProfitBlock() {
+        if (!mq.matches) return;
+
+        var profitPreview = document.getElementById('profitPreview');
+        var noRngPreview = document.getElementById('noRngProfitPreview');
+        var toggle = document.getElementById('darkModeToggle');
+        if (!profitPreview || !noRngPreview || !toggle) return;
+
+        var profitRow = profitPreview.closest('.row');
+        var noRngRow = noRngPreview.closest('.row');
+        if (!profitRow || !noRngRow) return;
+
+        var darkCol = toggle.closest('.col-md-auto');
+        if (!darkCol || !darkCol.parentElement) return;
+        var targetRow = darkCol.parentElement;      // 黑暗模式所在行
+        var parent = targetRow.parentElement;       // 该行的父容器
+        if (!parent) return;
+
+        // 已移动过则跳过（防止重复执行）
+        if (parent.contains(profitRow) || parent.contains(noRngRow)) return;
+
+        // 插到黑暗模式行后面（作为独立行显示在模拟结果上方）
+        parent.insertBefore(noRngRow, targetRow.nextSibling);
+        parent.insertBefore(profitRow, targetRow.nextSibling);
+    }
+
+    moveProfitBlock();
+    if (mq.addEventListener) {
+        mq.addEventListener('change', moveProfitBlock);
+    } else if (mq.addListener) {
+        mq.addListener(moveProfitBlock);
+    }
 })();

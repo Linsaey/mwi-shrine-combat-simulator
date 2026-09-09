@@ -589,4 +589,60 @@
         font-weight: 600;
         white-space: nowrap;
     }
+
+    /* ===================== 装备表头（槽位/物品/强化等级）：一行并排，与装备行对齐 ===================== */
+    .row.mb-3:has(> .col-md-2):has(> .col-md-6):has(> .col-md-4) {
+        display: flex;
+        flex-wrap: nowrap;
+        align-items: center;
+        gap: 8px;
+        margin: 0 0 8px 0;
+    }
+
+    .row.mb-3:has(> .col-md-2):has(> .col-md-6):has(> .col-md-4) > .col-md-2 {
+        flex: 0 0 25%;
+        max-width: 25%;
+        font-weight: 600;
+        padding: 0;
+    }
+
+    .row.mb-3:has(> .col-md-2):has(> .col-md-6):has(> .col-md-4) > .col-md-6 {
+        flex: 1 1 0%;
+        min-width: 0;
+        width: auto;
+        max-width: none;
+        padding: 0;
+    }
+
+    .row.mb-3:has(> .col-md-2):has(> .col-md-6):has(> .col-md-4) > .col-md-4 {
+        flex: 0 0 25%;
+        max-width: 25%;
+        padding: 0;
+    }
+
+    /* ===================== 实验性功能按钮：隐藏（减少布局占用） ===================== */
+    .row:has(> .col-md-auto > #buttonExperimentalFeatures) {
+        display: none;
+    }
+
+    /* ===================== "Select an Character:" 及下拉框：隐藏 ===================== */
+    label[for="comboBox"],
+    #profile-combo-container {
+        display: none !important;
+    }
+
+    /* ===================== 黑暗模式：文字 + 开关 一行 ===================== */
+    .col-md-auto:has(#darkModeToggle) {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        flex-wrap: nowrap;
+    }
+
+    /* ===================== 总伤害/承受伤害表：数字列禁止换行，防止显示不全 ===================== */
+    #simulationResultColumn2 .row > div:nth-child(2),
+    #simulationResultColumn2 .row > div:nth-child(3),
+    #simulationResultColumn2 .row > div:nth-child(4) {
+        white-space: nowrap;
+    }
 }
