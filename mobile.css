@@ -809,4 +809,196 @@
     #guildCombatBuffsList .row > .col-md-2 input {
         min-height: 40px;
     }
+
+    /* ===================== 开始模拟弹窗：选择玩家 / 模拟配置 同一行 ===================== */
+    #startSimulationModal .row:has(#playerCheckBox) {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    #startSimulationModal .row:has(#playerCheckBox) > .col-md-6 {
+        flex: 1 1 calc(50% - 8px);
+        min-width: 0;
+        width: auto;
+        max-width: none;
+        padding: 0;
+    }
+
+    #startSimulationModal .row:has(#playerCheckBox) > .col-md-6 .outlined-box {
+        padding: 8px;
+    }
+
+    /* 功能开关（哞卡/经验/战斗掉落/个人增益）：左标签右控件对齐，输入框不超界 */
+    #extraBuffCheckBox .form-switch {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 6px;
+    }
+
+    #extraBuffCheckBox .form-switch .form-check-input {
+        flex: 0 0 auto;
+        margin: 0;
+    }
+
+    #extraBuffCheckBox .form-switch .form-check-label {
+        flex: 1 1 0%;
+        min-width: 0;
+    }
+
+    #extraBuffCheckBox .row.g-2 {
+        display: flex;
+        flex-wrap: nowrap;
+        align-items: center;
+        gap: 8px;
+        margin: 0 0 6px 0;
+    }
+
+    #extraBuffCheckBox .row.g-2 > .col-md-7 {
+        flex: 1 1 0%;
+        min-width: 0;
+        width: auto;
+        max-width: none;
+        padding: 0;
+    }
+
+    #extraBuffCheckBox .row.g-2 > .col-auto {
+        flex: 0 0 auto;
+        width: auto;
+        padding: 0;
+    }
+
+    #extraBuffCheckBox .input-group {
+        flex-wrap: nowrap;
+        width: auto;
+    }
+
+    #extraBuffCheckBox .input-group .form-control {
+        width: 64px;
+        flex: 0 0 64px;
+    }
+
+    #extraBuffCheckBox .input-group .input-group-text {
+        padding: 0 8px;
+        font-size: 14px;
+    }
+
+    /* ===================== 模拟装备方案 + 导入/导出：同一行 ===================== */
+    .row:has(> .col-md-auto > #buttonEquipmentSets) > .col-md-auto:nth-child(1),
+    .row:has(> .col-md-auto > #buttonEquipmentSets) > .col-md-auto:nth-child(2) {
+        flex: 1 1 calc(50% - 3px);
+        max-width: calc(50% - 3px);
+        min-width: 0;
+        padding: 0;
+    }
+
+    .row:has(> .col-md-auto > #buttonEquipmentSets) > .col-md-auto:nth-child(1) .btn,
+    .row:has(> .col-md-auto > #buttonEquipmentSets) > .col-md-auto:nth-child(2) .btn {
+        width: 100%;
+        margin: 0;
+        padding: 10px 6px;
+        font-size: 15px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    /* ===================== Trigger 弹窗：条件行重排 ===================== */
+    /* 每行：第一行 = 删除红叉 + 第一个选择框；第二行 = 其余选择框/数值 */
+    #triggerModal [id^="modalTrigger_"] {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: stretch;
+        gap: 6px;
+        margin: 0 0 8px 0;
+    }
+
+    #triggerModal [id^="modalTrigger_"] > .col-md-2 {
+        order: -1;
+        flex: 0 0 13%;
+        max-width: 13%;
+        min-width: 0;
+        align-self: flex-start !important;
+        padding: 0;
+    }
+
+    #triggerModal [id^="modalTrigger_"] > .col-md-2 .btn {
+        width: 100%;
+        min-height: 44px;
+        padding: 0;
+        font-weight: 700;
+        font-size: 16px;
+    }
+
+    #triggerModal [id^="modalTrigger_"] > .col-md-10 {
+        flex: 1 1 0%;
+        min-width: 0;
+        width: auto;
+        max-width: none;
+        padding: 0;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+    }
+
+    /* AND 连接词行：手机端隐藏（条件行更紧凑） */
+    #triggerModal [id^="modalTrigger_"] > .col-md-10 > .row:has(> .col > b) {
+        display: none;
+    }
+
+    /* 第一个选择框（依赖）：第一行，与红叉同行 */
+    #triggerModal [id^="modalTrigger_"] > .col-md-10 > .row:has(select[id^="selectTriggerDependency_"]) {
+        flex: 1 1 100%;
+    }
+
+    /* 第二个选择框（条件）：第二行 38% */
+    #triggerModal [id^="modalTrigger_"] > .col-md-10 > .row:has(select[id^="selectTriggerCondition_"]) {
+        flex: 1 1 38%;
+    }
+
+    /* 比较符 + 数值：第二行 58% */
+    #triggerModal [id^="modalTrigger_"] > .col-md-10 > .row:has(select[id^="selectTriggerComparator_"]) {
+        flex: 1 1 58%;
+    }
+
+    #triggerModal [id^="modalTrigger_"] > .col-md-10 > .row {
+        display: flex;
+        flex-wrap: nowrap;
+        align-items: center;
+        gap: 6px;
+        margin: 0 !important;
+    }
+
+    #triggerModal [id^="modalTrigger_"] > .col-md-10 > .row > .col {
+        flex: 1 1 0%;
+        min-width: 0;
+        width: auto;
+        max-width: none;
+        padding: 0;
+    }
+
+    #triggerModal [id^="modalTrigger_"] > .col-md-10 > .row:has(select[id^="selectTriggerComparator_"]) > .col-md-6 {
+        flex: 1 1 50%;
+        min-width: 0;
+        width: auto;
+        max-width: none;
+        padding: 0;
+    }
+
+    /* 加条件 / 重置为默认：一行 */
+    #triggerModal .row:has(> .col-md-6 > #buttonAddTrigger) {
+        display: flex;
+        flex-wrap: nowrap;
+        gap: 8px;
+        margin: 0;
+    }
+
+    #triggerModal .row:has(> .col-md-6 > #buttonAddTrigger) > .col-md-6 {
+        flex: 1 1 0%;
+        min-width: 0;
+        width: auto;
+        max-width: none;
+        padding: 0;
+    }
 }

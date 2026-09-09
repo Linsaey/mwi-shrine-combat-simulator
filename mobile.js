@@ -66,4 +66,50 @@
     } else if (mq.addListener) {
         mq.addListener(moveProfitBlock);
     }
+
+    // 手机端：战斗属性（Combat Stats）默认折叠，点击标题展开/收起
+    // 只做视觉折叠，不改变任何元素 id / 数据，bundle.js 写入不受影响
+    function setupCollapsibleCombatStats() {
+        if (!mq.matches) return;
+
+        var col = document.querySelector('.row.pt-3 > .col-md-2');
+        if (!col || col.dataset.mwStatsDone) return;
+        col.dataset.mwStatsDone = '1';
+
+        var titleRow = col.querySelector(':scope > .row.mb-3');
+        if (!titleRow) return;
+
+        // 把除标题外的所有内容行收进一个容器
+        var content = document.createElement('div');
+        content.className = 'mw-stats-content';
+        var kids = col.children;
+        for (var i = kids.length - 1; i >= 0; i--) {
+            if (kids[i] !== titleRow) {
+                content.insertBefore(kids[i], content.firstChild);
+            }
+        }
+        col.appendChild(content);
+        content.style.display = 'none';
+
+        titleRow.style.cssText =
+            'display:flex;align-items:center;justify-content:space-between;' +
+            'cursor:pointer;user-select:none;padding:6px 0;margin-bottom:0;';
+        var caret = document.createElement('span');
+        caret.textContent = '▶';
+        caret.style.cssText = 'font-size:12px;color:#6c757d;';
+        titleRow.appendChild(caret);
+
+        titleRow.addEventListener('click', function () {
+            var open = content.style.display !== 'none';
+            content.style.display = open ? 'none' : 'block';
+            caret.textContent = open ? '▶' : '▼';
+        });
+    }
+
+    setupCollapsibleCombatStats();
+    if (mq.addEventListener) {
+        mq.addEventListener('change', setupCollapsibleCombatStats);
+    } else if (mq.addListener) {
+        mq.addListener(setupCollapsibleCombatStats);
+    }
 })();
