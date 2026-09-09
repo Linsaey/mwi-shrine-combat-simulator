@@ -1,0 +1,421 @@
+/* ==========================================================================
+   MWI Shrine Combat Simulator — 移动端适配层（独立样式文件）
+   生效范围：max-width: 767.98px（手机 / 小平板竖屏）
+   桌面端（>=768px）完全不受影响。
+   本文件只调整界面视觉与布局，不修改任何功能逻辑。
+   删除本文件的 <link> 引用即可 100% 回滚到原始界面。
+   ========================================================================== */
+
+@media (max-width: 767.98px) {
+
+    /* ===================== 基础 ===================== */
+    html {
+        -webkit-text-size-adjust: 100%;
+        /* 防止 iOS 旋转/聚焦时字体自动放大 */
+    }
+
+    body.p-3 {
+        font-size: 16px;
+        /* 底部给悬浮玩家栏让位（body.p-3 提高特异性以覆盖 Bootstrap .p-3） */
+        padding: 12px 12px calc(84px + env(safe-area-inset-bottom, 0px)) 12px !important;
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    .container-fluid {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    /* 隐藏右上角悬浮的语言切换按钮（English/中文）
+       切换语言仍可通过 URL 实现：index.html?lng=en 或 ?lng=zh（浏览器会记住）
+       桌面端不受影响（本规则只在移动端断点内生效） */
+    .language-switcher {
+        display: none !important;
+    }
+
+    /* ===================== 底部悬浮 Player 1~5 玩家栏 ===================== */
+    #playerTab {
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 1030;
+        /* 低于 Bootstrap modal(1055)，打开弹窗时会被盖住 */
+        display: flex;
+        flex-wrap: nowrap;
+        align-items: stretch;
+        gap: 6px;
+        margin: 0;
+        padding: 6px 8px calc(6px + env(safe-area-inset-bottom, 0px)) 8px;
+        background: rgba(255, 255, 255, 0.96);
+        border: 0;
+        border-top: 1px solid rgba(0, 0, 0, 0.12);
+        box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.12);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+    }
+
+    body.dark-mode #playerTab {
+        background: rgba(40, 40, 40, 0.96);
+        border-top-color: rgba(255, 255, 255, 0.12);
+    }
+
+    #playerTab .nav-item {
+        flex: 1 1 0;
+        min-width: 0;
+    }
+
+    #playerTab .nav-link {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 48px;
+        padding: 6px 4px;
+        font-size: 15px;
+        font-weight: 600;
+        color: #333;
+        border: 0;
+        border-radius: 10px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    body.dark-mode #playerTab .nav-link {
+        color: #e0e0e0;
+    }
+
+    #playerTab .nav-link.active,
+    body.dark-mode #playerTab .nav-link.active {
+        background: #0d6efd;
+        color: #fff;
+    }
+
+    /* ===================== 表单控件：放大触控目标 ===================== */
+    .form-control,
+    .form-select {
+        font-size: 16px !important;
+        /* >=16px 防止 iOS 聚焦时自动缩放页面 */
+        min-height: 46px;
+        padding: 10px 12px;
+    }
+
+    .form-select {
+        padding-right: 34px;
+    }
+
+    textarea.form-control {
+        font-size: 16px;
+    }
+
+    .btn {
+        font-size: 16px;
+        min-height: 46px;
+        padding: 10px 16px;
+        white-space: normal;
+    }
+
+    .form-check-input {
+        width: 22px;
+        height: 22px;
+        margin-top: 0;
+    }
+
+    .form-switch .form-check-input {
+        width: 2.4em;
+        height: 1.4em;
+    }
+
+    .btn-close {
+        width: 34px;
+        height: 34px;
+    }
+
+    .input-group-text,
+    .form-label,
+    .col-form-label {
+        font-size: 15px;
+    }
+
+    /* ===================== 移动端列重排：详细属性放到最后 ===================== */
+    /* DOM 顺序：配置列(1) → Combat Stats(2) → 结果(3)；手机上改为 配置 → 结果 → 详细属性 */
+    .row.pt-3 > .col-md-2 {
+        order: 3;
+    }
+
+    .row.pt-3 > .col-md-5:last-child {
+        order: 2;
+    }
+
+    /* ===================== 属性等级（专业）：标签 + 输入框 一行排列 ===================== */
+    .row.mb-2:has(input[id^="inputLevel_"]) {
+        display: flex;
+        flex-wrap: nowrap;
+        align-items: center;
+        gap: 8px;
+        margin: 0 0 6px 0;
+    }
+
+    .row.mb-2:has(input[id^="inputLevel_"]) > .col-md-6:first-child {
+        flex: 0 0 auto;
+        width: auto;
+        max-width: 42%;
+        font-weight: 600;
+        padding: 0;
+    }
+
+    .row.mb-2:has(input[id^="inputLevel_"]) > .col-md-6:last-child {
+        flex: 1 1 0%;
+        min-width: 0;
+        width: auto;
+        max-width: none;
+        padding: 0;
+    }
+
+    /* ===================== 装备槽位：一行排列（槽位名 / 物品 / 强化） ===================== */
+    .row.mb-2:has(select[id^="selectEquipment_"]) {
+        display: flex;
+        flex-wrap: nowrap;
+        align-items: center;
+        gap: 8px;
+        margin: 0 0 8px 0;
+    }
+
+    .row.mb-2:has(select[id^="selectEquipment_"]) > .col-md-2 {
+        flex: 0 0 25%;
+        max-width: 25%;
+        font-weight: 600;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        padding: 0;
+    }
+
+    .row.mb-2:has(select[id^="selectEquipment_"]) > .col-md-6 {
+        flex: 1 1 0%;
+        min-width: 0;
+        width: auto;
+        max-width: none;
+        padding: 0;
+    }
+
+    .row.mb-2:has(select[id^="selectEquipment_"]) > .col-md-4 {
+        flex: 0 0 25%;
+        max-width: 25%;
+        padding: 0;
+    }
+
+    /* ===================== 技能行：选择器 / 等级 / Trigger 一行 ===================== */
+    /* 匹配内层技能行（首子元素为 col-md-6）：普通技能行与"大技能"行（.row.mb-3）都命中；
+       外层能力容器行（首子元素 col-md-5）通过 > .col-md-6 排除，避免误伤 */
+    .row:has(> .col-md-6):has(select[id^="selectAbility_"]) {
+        display: flex;
+        flex-wrap: nowrap;
+        align-items: center;
+        gap: 6px;
+        margin: 0 0 8px 0;
+    }
+
+    .row:has(> .col-md-6):has(select[id^="selectAbility_"]) > .col-md-6 {
+        flex: 1 1 0%;
+        min-width: 0;
+        width: auto;
+        max-width: none;
+        padding: 0;
+    }
+
+    /* 等级输入框：固定宽度 */
+    .row:has(> .col-md-6):has(select[id^="selectAbility_"]) > .col-md-auto:nth-child(2) {
+        flex: 0 0 74px;
+        width: 74px;
+        padding: 0;
+    }
+
+    .row:has(> .col-md-6):has(select[id^="selectAbility_"]) > .col-md-auto:nth-child(3) {
+        flex: 0 0 auto;
+        width: auto;
+        max-width: none;
+        padding: 0;
+    }
+
+    /* ===================== 食物 / 饮料行：选择器 + Trigger 一行 ===================== */
+    /* 匹配内层食物/饮料行（首子元素为 .col）：普通行与 .row.mb-3 的"大格"行都命中 */
+    .row:has(> .col):has(select[id^="selectFood_"]),
+    .row:has(> .col):has(select[id^="selectDrink_"]) {
+        display: flex;
+        flex-wrap: nowrap;
+        align-items: center;
+        gap: 8px;
+        margin: 0 0 8px 0;
+    }
+
+    .row:has(> .col):has(select[id^="selectFood_"]) > .col,
+    .row:has(> .col):has(select[id^="selectDrink_"]) > .col {
+        flex: 1 1 0%;
+        min-width: 0;
+        width: auto;
+        max-width: none;
+        padding: 0;
+    }
+
+    .row:has(> .col):has(select[id^="selectFood_"]) > .col-md-auto,
+    .row:has(> .col):has(select[id^="selectDrink_"]) > .col-md-auto {
+        flex: 0 0 auto;
+        width: auto;
+        max-width: none;
+        padding: 0;
+    }
+
+    /* ===================== 主要操作按钮 ===================== */
+    #buttonSimulationSetup {
+        width: 100%;
+        font-size: 18px;
+        font-weight: 700;
+    }
+
+    #buttonStopSimulation {
+        width: 100%;
+    }
+
+    #buttonEquipmentSets,
+    #buttonImportExport,
+    #buttonInstallLiveImporter,
+    #buttonInstallHitTrackerFix {
+        width: 100%;
+        margin-bottom: 6px;
+    }
+
+    #profile-combo-container {
+        width: 100%;
+        font-size: 16px;
+        min-height: 46px;
+    }
+
+    /* ===================== Combat Stats：紧凑双列（标签左 / 数值右） ===================== */
+    .col-md-2 .row {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 6px;
+        margin-bottom: 4px;
+    }
+
+    .col-md-2 .row > div {
+        width: auto !important;
+        flex: 0 1 auto;
+        max-width: 62%;
+    }
+
+    .col-md-2 .row > div:last-child {
+        text-align: right;
+        font-weight: 600;
+    }
+
+    /* ===================== 模拟结果面板 ===================== */
+    #simulationResultColumn2 .row {
+        display: flex;
+        flex-wrap: nowrap;
+        align-items: center;
+        gap: 4px;
+    }
+
+    #simulationResultColumn2 [class*="col-md-"] {
+        flex: 1 1 0;
+        width: auto !important;
+        max-width: none;
+        padding: 2px;
+    }
+
+    #simulationResultColumn2 .text-end {
+        text-align: right;
+    }
+
+    #simulationResultTotalDamageDone,
+    #simulationResultTotalDamageTaken,
+    #simulationResultDrops,
+    #noRngDrops {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    #simulationResultColumn2 .row:first-child b,
+    #simulationResultColumn2 b {
+        font-size: 15px;
+    }
+
+    /* ===================== HP/MP 图表 ===================== */
+    #combatChartsContainer canvas {
+        width: 100% !important;
+        height: auto !important;
+    }
+
+    /* ===================== Modal：近全屏，按钮贴底 ===================== */
+    .modal-dialog {
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 0 !important;
+    }
+
+    .modal-content {
+        border: 0;
+        border-radius: 0;
+        min-height: 100vh;
+        min-height: 100dvh;
+    }
+
+    .modal-header {
+        padding: 14px 16px;
+    }
+
+    .modal-body {
+        padding: 14px;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .modal-footer {
+        position: sticky;
+        bottom: 0;
+        z-index: 5;
+        background: inherit;
+        padding: 12px 14px calc(12px + env(safe-area-inset-bottom, 0px)) 14px;
+        gap: 8px;
+    }
+
+    .modal-footer .btn {
+        flex: 1 1 auto;
+    }
+
+    /* ===================== 大表格：允许横向滚动 ===================== */
+    #allZonesData {
+        width: 100%;
+        font-size: 13px;
+        min-width: 900px;
+    }
+
+    .profit-table {
+        font-size: 13px;
+    }
+
+    .profit-table th,
+    .profit-table td {
+        white-space: nowrap;
+    }
+
+    /* ===================== 其他细节 ===================== */
+    .progress {
+        height: 12px;
+    }
+
+    .outlined-box {
+        padding: 12px;
+    }
+
+    .accordion-button {
+        font-size: 15px;
+    }
+
+    /* 保留原 dark-mode 下各区块的对比度，统一圆角内边距 */
+    body.dark-mode .card {
+        border-color: rgba(255, 255, 255, 0.14);
+    }
+}
