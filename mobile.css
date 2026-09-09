@@ -312,21 +312,44 @@
     }
 
     /* ===================== 模拟结果面板 ===================== */
+    /* 总伤害/总承受伤害表：四列固定分配，一行显示不换行 */
     #simulationResultColumn2 .row {
         display: flex;
         flex-wrap: nowrap;
         align-items: center;
         gap: 4px;
+        margin-bottom: 2px;
     }
 
     #simulationResultColumn2 [class*="col-md-"] {
-        flex: 1 1 0;
+        flex: 0 1 auto;
         width: auto !important;
         max-width: none;
         padding: 2px;
+        font-size: 13px;
     }
 
-    #simulationResultColumn2 .text-end {
+    /* 列宽分配：来源(40%弹性) / 命中率(26%) / DPS(20%) / %(14%) */
+    #simulationResultColumn2 .row > div:nth-child(1) {
+        flex: 1 1 40%;
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    #simulationResultColumn2 .row > div:nth-child(2) {
+        flex: 0 0 26%;
+        text-align: right;
+    }
+
+    #simulationResultColumn2 .row > div:nth-child(3) {
+        flex: 0 0 20%;
+        text-align: right;
+    }
+
+    #simulationResultColumn2 .row > div:nth-child(4) {
+        flex: 0 0 14%;
         text-align: right;
     }
 
@@ -417,5 +440,153 @@
     /* 保留原 dark-mode 下各区块的对比度，统一圆角内边距 */
     body.dark-mode .card {
         border-color: rgba(255, 255, 255, 0.14);
+    }
+
+    /* ===================== 房屋 / 成就 / 公会：一行 3 个按钮 ===================== */
+    .row.mb-2:has(> #buttonHouseRoomsModal),
+    .row.mb-2:has(> #buttonAchievementsModal),
+    .row.mb-2:has(> #buttonGuildCombatBuffsModal) {
+        display: contents;
+    }
+
+    #buttonHouseRoomsModal,
+    #buttonAchievementsModal,
+    #buttonGuildCombatBuffsModal {
+        display: inline-block;
+        width: 31.5%;
+        margin: 2px 0.25%;
+        padding: 10px 4px;
+        font-size: 15px;
+    }
+
+    /* ===================== 价格设置：标签 + 下拉 一行（两项各一行） ===================== */
+    .row:has(> .col-md-12 > select[id^="selectPrices_"]) {
+        display: flex;
+        flex-wrap: nowrap;
+        align-items: center;
+        gap: 8px;
+        margin: 0 0 6px 0;
+    }
+
+    .row:has(> .col-md-12 > select[id^="selectPrices_"]) > .col-md-12:first-child {
+        flex: 0 0 44%;
+        max-width: 44%;
+        font-weight: 600;
+        padding: 0;
+    }
+
+    .row:has(> .col-md-12 > select[id^="selectPrices_"]) > .col-md-12:last-child {
+        flex: 1 1 0%;
+        min-width: 0;
+        width: auto;
+        padding: 0;
+    }
+
+    /* ===================== 技能区标题行：显示"技能/等级"，隐藏 齿轮/开关/箭头 ===================== */
+    .row:has(> .col-md-auto > .d-flex > #gearLabel) {
+        display: flex;
+        flex-wrap: nowrap;
+        align-items: center;
+        gap: 6px;
+        margin: 0 0 8px 0;
+    }
+
+    /* 左侧占位，与技能行的顺序调整按钮同宽，保证"技能/等级"标题对齐下方输入框 */
+    .row:has(> .col-md-auto > .d-flex > #gearLabel)::before {
+        content: '';
+        flex: 0 0 52px;
+        width: 52px;
+    }
+
+    /* 右侧占位，与技能行的 Trigger 列同宽，保证"等级"标题对齐等级框 */
+    .row:has(> .col-md-auto > .d-flex > #gearLabel)::after {
+        content: '';
+        flex: 0 0 88px;
+        width: 88px;
+    }
+
+    .row:has(> .col-md-auto > .d-flex > #gearLabel) > .col-md-6 {
+        flex: 1 1 0%;
+        min-width: 0;
+        padding: 0;
+    }
+
+    .row:has(> .col-md-auto > .d-flex > #gearLabel) > .col-md-auto:nth-child(2) {
+        flex: 0 0 74px;
+        width: 74px;
+        text-align: center;
+        padding: 0;
+    }
+
+    .row:has(> .col-md-auto > .d-flex > #gearLabel) > .col-md-auto:nth-child(3) {
+        display: none;
+    }
+
+    /* ===================== 技能行：顺序调整按钮显示在最左侧 ===================== */
+    .row:has(> .col-md-6):has(select[id^="selectAbility_"]) > .col-md-auto:last-child {
+        display: block !important;
+        flex: 0 0 44px;
+        width: 44px;
+        order: -1;
+        padding: 0;
+    }
+
+    .row:has(> .col-md-6):has(select[id^="selectAbility_"]) > .col-md-auto:last-child .btn {
+        width: 100%;
+        min-height: 46px;
+        padding: 0;
+        font-weight: 700;
+        font-size: 16px;
+    }
+
+    /* ===================== 获取价格/编辑价格/更新日志/团灭日志：一行 4 个 ===================== */
+    .row:has(> .col-md-auto > #buttonGetPrices),
+    .row:has(> .col-md-auto > #buttonEditPrices),
+    .row:has(> .col-md-auto > #buttonPatchNotes),
+    .row:has(> .col-md-auto > #buttonWipeEvents) {
+        display: contents;
+    }
+
+    /* 同时打散包裹层 col-md-auto，让按钮直接并排 */
+    .row:has(> .col-md-auto > #buttonGetPrices) > .col-md-auto,
+    .row:has(> .col-md-auto > #buttonEditPrices) > .col-md-auto,
+    .row:has(> .col-md-auto > #buttonPatchNotes) > .col-md-auto,
+    .row:has(> .col-md-auto > #buttonWipeEvents) > .col-md-auto {
+        display: contents;
+    }
+
+    #buttonGetPrices,
+    #buttonEditPrices,
+    #buttonPatchNotes,
+    #buttonWipeEvents {
+        display: inline-block;
+        width: 23.5%;
+        margin: 2px 0.2%;
+        padding: 10px 2px;
+        font-size: 14px;
+    }
+
+    /* ===================== 模拟结果指标：标签左 / 数值右 一行 ===================== */
+    /* 结果列（col-md-5:last-child）内部指标容器（.col-md-5）中 JS 生成的行 */
+    .row.pt-3 > .col-md-5:last-child .col-md-5 .row {
+        display: flex;
+        flex-wrap: nowrap;
+        align-items: baseline;
+        gap: 6px;
+        margin-bottom: 2px;
+    }
+
+    .row.pt-3 > .col-md-5:last-child .col-md-5 [class*="col-md-"] {
+        flex: 0 1 auto;
+        width: auto !important;
+        max-width: none;
+        padding: 0 2px;
+    }
+
+    .row.pt-3 > .col-md-5:last-child .col-md-5 [class*="col-md-"]:last-child {
+        margin-left: auto;
+        text-align: right;
+        font-weight: 600;
+        white-space: nowrap;
     }
 }
