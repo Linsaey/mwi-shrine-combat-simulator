@@ -1130,9 +1130,25 @@
                             <b><span data-i18n="common:noRNGProfit">No RNG Profit</span>: <span id="noRngProfitPreview"></span></b>
                         </div>
                         <div class="row pt-2">
-                            <b data-i18n="common:dropTotal">Drops (Total)</b>
+                            <div class="col">
+                                <div class="accordion">
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header">
+                                            <button id="buttonRngDropsAccordion" class="accordion-button collapsed"
+                                                type="button" data-bs-toggle="collapse"
+                                                data-bs-target="#collapseRngDrops" style="padding: 0.5em">
+                                                <b data-i18n="common:dropTotal">Drops (Total)</b>
+                                            </button>
+                                        </h2>
+                                        <div id="collapseRngDrops" class="accordion-collapse collapse">
+                                            <div class="accordion-body p-0 pt-2">
+                                                <div id="simulationResultDrops"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="row" id="simulationResultDrops"></div>
                         <div class="row pt-2 d-none" id="noRngDropsAccordion">
                             <div class="col">
                                 <div class="accordion">
