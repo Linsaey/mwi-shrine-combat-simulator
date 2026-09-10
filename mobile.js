@@ -117,6 +117,49 @@
         mq.addListener(setupCollapsibleCombatStats);
     }
 
+    // 紧凑模式：主页面"开始模拟"按钮以上的选择框/输入框外框高度减半、行距减半
+    // （样式见 mobile.css html.mwi-compact 规则）。切换按钮放在战斗属性下方，
+    // 选择存入 localStorage，默认标准模式。只改视觉，不影响任何功能。
+    function setupCompactModeToggle() {
+        if (!mq.matches) return;
+
+        var col = document.querySelector('.row.pt-3 > .col-md-2');
+        if (!col || col.dataset.mwCompactDone) return;
+        col.dataset.mwCompactDone = '1';
+
+        var btn = document.createElement('button');
+        btn.id = 'mwiCompactToggle';
+        btn.type = 'button';
+
+        function refresh() {
+            var on = document.documentElement.classList.contains('mwi-compact');
+            btn.textContent = on ? '切换到标准模式' : '切换到紧凑模式';
+        }
+
+        // 初始化：读取上次选择
+        try {
+            if (localStorage.getItem('mwiCompactMode') === '1') {
+                document.documentElement.classList.add('mwi-compact');
+            }
+        } catch (e) {}
+
+        btn.addEventListener('click', function () {
+            var on = document.documentElement.classList.toggle('mwi-compact');
+            try { localStorage.setItem('mwiCompactMode', on ? '1' : '0'); } catch (e) {}
+            refresh();
+        });
+
+        refresh();
+        col.appendChild(btn);
+    }
+
+    setupCompactModeToggle();
+    if (mq.addEventListener) {
+        mq.addEventListener('change', setupCompactModeToggle);
+    } else if (mq.addListener) {
+        mq.addListener(setupCompactModeToggle);
+    }
+
     // 手机端：专业等级（8 个）分成两列 —— 战斗/耐力/智力/攻击 一列，近战/防御/远程/魔法 一列
     // 仅调整布局，元素 id / 数据不变，bundle.js 读写不受影响
     function splitLevelsIntoColumns() {
