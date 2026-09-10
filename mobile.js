@@ -220,3 +220,42 @@
         });
     }
 })();
+
+
+// R8-补：公会按钮/弹窗简体覆盖（兜底，独立于 locales）
+function applyGuildSimplified() {
+    var map = {
+        "common:guildCombatBuffs.title": "公会",
+        "common:guildCombatBuffs.description": "选择各公会神穫实际生效的战斗 Buff 等级；生活等级不纳入模拟。神穫升级后仍需购买对应的个人 Buff 等级才会生效。",
+        "common:guildCombatBuffs.importSnapshotTitle": "目前基准来自这次汇入",
+        "common:guildCombatBuffs.importSnapshotDescription": "插件会汇入目前角色的战斗神穫等级；缺少资料时会归零，不会沿用上一位角色。",
+        "common:guildCombatBuffs.formulaNote": "原模拟器的攻击、命中、防御与技能公式保持不变；神穫效果透过相同的 Buff 属性管线加入。",
+        "common:guildCombatBuffs.shrine": "神穫",
+        "common:guildCombatBuffs.effect": "正式效果",
+        "common:guildCombatBuffs.currentLevel": "目前等级",
+        "common:guildCombatBuffs.testLevel": "测试等级",
+        "common:guildCombatBuffs.resetImported": "神穫恢复汇入等级",
+        "common:guildCombatBuffs.loadBlankPreset": "载入空白角色",
+        "common:guildCombatBuffs.force": "力量神穫",
+        "common:guildCombatBuffs.forceEffect": "每级：伤害 +0.3%",
+        "common:guildCombatBuffs.tempo": "节奏神穫",
+        "common:guildCombatBuffs.tempoEffect": "每级：攻击速度 +0.4%、施法速度 +0.4%",
+        "common:guildCombatBuffs.spirit": "精神神穫",
+        "common:guildCombatBuffs.spiritEffect": "每级：最大 HP +1%、最大 MP +1%",
+        "common:guildCombatBuffs.rarity": "稀有神穫",
+        "common:guildCombatBuffs.rarityEffect": "每级：战斗稀有发现 +1.5%",
+        "common:guildCombatBuffs.scholar": "学者神穫",
+        "common:guildCombatBuffs.scholarEffect": "每级：战斗经验 +0.5%"
+    };
+    function apply() {
+        document.querySelectorAll('[data-i18n^="common:guildCombatBuffs"]').forEach(function (el) {
+            var key = el.getAttribute('data-i18n');
+            if (map[key]) el.textContent = map[key];
+        });
+        var btn = document.getElementById('buttonGuildCombatBuffsModal');
+        if (btn) btn.textContent = "公会";
+    }
+    if (document.readyState !== 'loading') { setTimeout(apply, 800); setTimeout(apply, 2500); }
+    else document.addEventListener('DOMContentLoaded', function () { setTimeout(apply, 800); setTimeout(apply, 2500); });
+}
+applyGuildSimplified();
