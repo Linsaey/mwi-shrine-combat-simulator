@@ -449,6 +449,26 @@
         margin-bottom: 2px;
     }
 
+    /* 数值行右缘留白 12px：% / DPS / 命中率整体左移，不再贴视口右缘
+       （只匹配直接子行；排除消耗品块 mw-inline-row 及消耗品值区内的深层明细行） */
+    #simulationResultColumn2 > .row:not(.mw-inline-row) {
+        padding-right: 12px;
+    }
+
+    /* 来源列（第一列）文字与"总伤害/总承受伤害"标题左对齐：
+       第一列统一 12px 左内边距，使"来"与"总"都在视口左缘 12px 的同一条竖线
+       （只影响直接子行，消耗品区除外） */
+    #simulationResultColumn2 > .row:not(.mw-inline-row) > div:first-child {
+        padding-left: 12px;
+    }
+
+    /* "总伤害/总承受伤害"标题行：覆盖 Bootstrap .row > * 默认 12px 左内边距，
+       与来源列表头/数值行统一对齐到 12px 竖线（> b 只匹配标题行的直接子 b，
+       不误伤表头列内嵌的 <b>——它由父列 12px 内边距对齐） */
+    #simulationResultColumn2 > .row:not(.mw-inline-row) > b {
+        padding-left: 12px;
+    }
+
     #simulationResultColumn2 [class*="col-md-"] {
         flex: 0 1 auto;
         width: auto !important;
@@ -457,9 +477,10 @@
         font-size: 13px;
     }
 
-    /* 列宽分配：来源(40%弹性) / 命中率(26%) / DPS(20%) / %(14%) */
+    /* 列宽分配：来源(35%) / 命中率(22%) / DPS(25%) / %(18%)
+       （原 40/26/20/14：表头词少显空、DPS/% 数字列偏窄；重分配后数字列都有余量） */
     #simulationResultColumn2 .row > div:nth-child(1) {
-        flex: 1 1 40%;
+        flex: 1 1 35%;
         min-width: 0;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -467,17 +488,17 @@
     }
 
     #simulationResultColumn2 .row > div:nth-child(2) {
-        flex: 0 0 26%;
+        flex: 0 0 22%;
         text-align: right;
     }
 
     #simulationResultColumn2 .row > div:nth-child(3) {
-        flex: 0 0 20%;
+        flex: 0 0 25%;
         text-align: right;
     }
 
     #simulationResultColumn2 .row > div:nth-child(4) {
-        flex: 0 0 14%;
+        flex: 0 0 18%;
         text-align: right;
     }
 
