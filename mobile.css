@@ -126,6 +126,37 @@
         height: 1.4em;
     }
 
+    /* ===================== 开始模拟弹窗 checkbox 触控优化 =====================
+       选择玩家 / 模拟配置的对勾框：改 flex 垂直居中（视觉位置=触摸命中区，
+       规避 iOS Safari 上 margin-top 偏移导致的"要点偏下方才能勾上"），
+       并放大到 27px、行高 36px 便于手指点中。form-switch 开关不处理。 */
+    #startSimulationModal .outlined-box .form-check:not(.form-switch) {
+        display: flex;
+        align-items: center;
+        min-height: 36px;
+        padding-left: 0;
+        margin-bottom: 0;
+    }
+
+    #startSimulationModal .outlined-box .form-check:not(.form-switch) .form-check-input {
+        float: none;
+        margin: 0 8px 0 0;
+        width: 27px;
+        height: 27px;
+        flex-shrink: 0;
+    }
+
+    #startSimulationModal .form-check-reverse:not(.form-switch) {
+        flex-direction: row-reverse;
+        justify-content: flex-end;
+        padding-right: 0;
+        padding-left: 0;
+    }
+
+    #startSimulationModal .form-check-reverse:not(.form-switch) .form-check-input {
+        margin: 0 0 0 8px;
+    }
+
     .btn-close {
         width: 34px;
         height: 34px;
