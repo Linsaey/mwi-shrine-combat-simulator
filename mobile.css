@@ -312,7 +312,12 @@
     }
 
     /* ===================== 模拟结果面板 ===================== */
-    /* 法力/生命/法力恢复 breakdown 明细行：名称/括号(数值)/数字 固定列宽对齐 */
+    /* 全区统一：模拟结果全部明细区（击杀/死亡/经验/消耗品/法力值/生命恢复/法力恢复）
+       行 = 单行 flex；名称列统一 50% 左对齐（超长省略）；最右列统一右对齐贴容器右缘 */
+    #simulationResultKills .row,
+    #simulationResultPlayerDeaths .row,
+    #simulationResultExperienceGain .row,
+    #simulationResultConsumablesUsed .row,
     #simulationResultManaUsed .row,
     #simulationResultHealthRestored .row,
     #simulationResultManaRestored .row {
@@ -323,6 +328,10 @@
         margin-bottom: 2px;
     }
 
+    #simulationResultKills .row > div,
+    #simulationResultPlayerDeaths .row > div,
+    #simulationResultExperienceGain .row > div,
+    #simulationResultConsumablesUsed .row > div,
     #simulationResultManaUsed .row > div,
     #simulationResultHealthRestored .row > div,
     #simulationResultManaRestored .row > div {
@@ -332,36 +341,48 @@
         font-size: 13px;
     }
 
-    /* 法力值明细：名称(弹性) / (次数) / 数字右对齐 */
-    #simulationResultManaUsed .row > div:nth-child(1) {
-        flex: 1 1 50%;
+    /* 名称列：全区统一 50% 左对齐 + 省略号 */
+    #simulationResultKills .row > div:nth-child(1),
+    #simulationResultPlayerDeaths .row > div:nth-child(1),
+    #simulationResultExperienceGain .row > div:nth-child(1),
+    #simulationResultConsumablesUsed .row > div:nth-child(1),
+    #simulationResultManaUsed .row > div:nth-child(1),
+    #simulationResultHealthRestored .row > div:nth-child(1),
+    #simulationResultManaRestored .row > div:nth-child(1) {
+        flex: 0 0 50%;
         min-width: 0;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
     }
 
-    #simulationResultManaUsed .row > div:nth-child(2) {
-        flex: 0 0 27%;
-        text-align: left;
-    }
-
-    #simulationResultManaUsed .row > div:nth-child(3) {
-        flex: 0 0 23%;
+    /* 2 列区（击杀/死亡/经验/消耗品）：数值列 50% 右对齐贴右 */
+    #simulationResultKills .row > div:nth-child(2),
+    #simulationResultPlayerDeaths .row > div:nth-child(2),
+    #simulationResultExperienceGain .row > div:nth-child(2),
+    #simulationResultConsumablesUsed .row > div:nth-child(2) {
+        flex: 0 0 50%;
         text-align: right;
         font-weight: 600;
     }
 
-    /* 生命/法力恢复明细：名称(弹性) / 数值右对齐 / 百分比右对齐 */
-    #simulationResultHealthRestored .row > div:nth-child(1),
-    #simulationResultManaRestored .row > div:nth-child(1) {
-        flex: 1 1 50%;
+    /* 法力值区：名称50 / (次数)20 / 数字30 右对齐 */
+    #simulationResultManaUsed .row > div:nth-child(2) {
+        flex: 0 0 20%;
         min-width: 0;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+        text-align: left;
     }
 
+    #simulationResultManaUsed .row > div:nth-child(3) {
+        flex: 0 0 30%;
+        text-align: right;
+        font-weight: 600;
+    }
+
+    /* 生命/法力恢复区：名称50 / 数值25 / 百分比25 右对齐 */
     #simulationResultHealthRestored .row > div:nth-child(2),
     #simulationResultManaRestored .row > div:nth-child(2) {
         flex: 0 0 25%;
