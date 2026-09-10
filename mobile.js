@@ -288,6 +288,90 @@
 
     inlineSimResultNumbers();
     reorderSimResultPanels();
+
+    // 手机端：总伤害 / 总承受伤害 汇总表改为手风琴（默认展开，内容全宽显示完整）
+    function setupTotalDamageAccordions() {
+        if (!mq.matches) return;
+        var col2 = document.getElementById('simulationResultColumn2');
+        if (!col2) return;
+        var groups = [
+            { i18n: 'common:simulationResults.damageDoneTotal', text: '总伤害', boxId: 'simulationResultTotalDamageDone', label: 'Done' },
+            { i18n: 'common:simulationResults.damageTakenTotal', text: '总承受伤害', boxId: 'simulationResultTotalDamageTaken', label: 'Taken' }
+        ];
+        groups.forEach(function (g) {
+            if (col2.querySelector('.mw-total-acc[data-mw-label="' + g.label + '"]')) return;
+            var totalBox = document.getElementById(g.boxId);
+            if (!totalBox) return;
+            // 定位标题行：优先 data-i18n，回退文本匹配
+            var titleRow = null;
+            var i18nEl = col2.querySelector('[data-i18n="' + g.i18n + '"]');
+            if (i18nEl) titleRow = i18nEl.closest('.row');
+            if (!titleRow) {
+                Array.prototype.forEach.call(col2.children, function (el) {
+                    if (titleRow) return;
+                    if (el.classList && el.classList.contains('row') &&
+                        (el.textContent || '').trim().indexOf(g.text) >= 0) titleRow = el;
+                });
+            }
+            if (!titleRow) return;
+            // 表头行：标题行之后第一个含"来源"的 .row
+            var headerRow = titleRow.nextElementSibling;
+            while (headerRow && !(headerRow.classList && headerRow.classList.contains('row') &&
+                (headerRow.textContent || '').indexOf('来源') >= 0)) {
+                headerRow = headerRow.nextElementSibling;
+            }
+            if (!headerRow) return;
+            // 组装手风琴
+            var acc = document.createElement('div');
+            acc.className = 'accordion mw-total-acc';
+            acc.dataset.mwLabel = g.label;
+            var item = document.createElement('div');
+            item.className = 'accordion-item';
+            var h2 = document.createElement('h2');
+            h2.className = 'accordion-header';
+            var btn = document.createElement('button');
+            btn.className = 'accordion-button';
+            btn.type = 'button';
+            btn.setAttribute('data-bs-toggle', 'collapse');
+            btn.setAttribute('data-bs-target', '#mwCollapseTotal' + g.label);
+            btn.setAttribute('aria-expanded', 'true');
+            btn.style.padding = '0.5em';
+            var b = titleRow.querySelector('b') || titleRow;
+            btn.appendChild(b);
+            h2.appendChild(btn);
+            item.appendChild(h2);
+            var collapse = document.createElement('div');
+            collapse.id = 'mwCollapseTotal' + g.label;
+            collapse.className = 'accordion-collapse collapse show';
+            var bodyDiv = document.createElement('div');
+            bodyDiv.className = 'accordion-body';
+            bodyDiv.appendChild(headerRow);
+            bodyDiv.appendChild(totalBox);
+            collapse.appendChild(bodyDiv);
+            item.appendChild(collapse);
+            acc.appendChild(item);
+            titleRow.parentNode.insertBefore(acc, titleRow);
+            titleRow.remove();
+            if (window.bootstrap && bootstrap.Collapse) {
+                try { bootstrap.Collapse.getOrCreateInstance(collapse, { toggle: false }); } catch (e) {}
+            }
+        });
+    }
+    setupTotalDamageAccordions();
+    // 兜底：bundle.js 在 mobile.js 之后执行，标题行/表头行可能尚未渲染；
+    // DOM 就绪后分时重试，确保手风琴一定生成（幂等，重复调用无副作用）
+    function retryTotalAccordions() {
+        setTimeout(setupTotalDamageAccordions, 300);
+        setTimeout(setupTotalDamageAccordions, 1500);
+        setTimeout(setupTotalDamageAccordions, 4000);
+    }
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', retryTotalAccordions);
+    } else {
+        retryTotalAccordions();
+    }
+    window.addEventListener('load', function () { setTimeout(setupTotalDamageAccordions, 500); });
+
     // 手机端：安装/更新两个按钮移到模拟器最底部（主容器末尾，战斗属性/模拟结果之后）
     function moveInstallButtonsToBottom() {
         if (!mq.matches) return;
@@ -319,6 +403,7 @@
             splitFoodDrinksIntoColumns();
             inlineSimResultNumbers();
             reorderSimResultPanels();
+            setupTotalDamageAccordions();
             moveInstallButtonsToBottom();
         });
     } else if (mq.addListener) {
@@ -327,6 +412,7 @@
             splitFoodDrinksIntoColumns();
             inlineSimResultNumbers();
             reorderSimResultPanels();
+            setupTotalDamageAccordions();
             moveInstallButtonsToBottom();
         });
     }
