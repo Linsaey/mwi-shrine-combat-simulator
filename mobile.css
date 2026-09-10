@@ -502,7 +502,9 @@
         min-width: 0 !important;
         width: auto !important;
         max-width: none !important;
-        padding: 2px !important;
+        /* 左 padding 14px：补齐与左列 7 项（183px 起点）的 12px 差异；
+           右 padding 8px：数值右缘与 2 列区（385px）对齐，全区右缘一条线 */
+        padding: 2px 8px 2px 14px !important;
         text-align: right;
         font-weight: 600;
     }
