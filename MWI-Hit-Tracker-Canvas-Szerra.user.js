@@ -1,18 +1,18 @@
 
 // ==UserScript==
-// @name           MWI-Hit-Tracker-Canvas（Szerra 相容修正版）
-// @namespace      https://github.com/szerra/mwi-shrine-combat-simulator
+// @name           MWI-Hit-Tracker-Canvas（Linsaey 兼容修正版）
+// @namespace      https://github.com/Linsaey/mwi-shrine-combat-simulator
 // @version        1.2.5
 // @author         Artintel, BKN46; Szerra compatibility fixes
-// @description    MWI 命中特效；修正 MWITools 圖卡縮放衝突與扣血條位置偏移。
+// @description    MWI 命中特效；修正 MWITools 图卡缩放冲突与扣血条位置偏移。
 // @icon           https://www.milkywayidle.com/favicon.svg
 // @match          https://www.milkywayidle.com/*
 // @match          https://test.milkywayidle.com/*
 // @match          https://www.milkywayidlecn.com/*
 // @license        MIT
-// @homepageURL    https://github.com/szerra/mwi-shrine-combat-simulator
-// @downloadURL    https://szerra.github.io/mwi-shrine-combat-simulator/MWI-Hit-Tracker-Canvas-Szerra.user.js
-// @updateURL      https://szerra.github.io/mwi-shrine-combat-simulator/MWI-Hit-Tracker-Canvas-Szerra.user.js
+// @homepageURL    https://github.com/Linsaey/mwi-shrine-combat-simulator
+// @downloadURL    https://linsaey.github.io/mwi-shrine-combat-simulator/MWI-Hit-Tracker-Canvas-Szerra.user.js
+// @updateURL      https://linsaey.github.io/mwi-shrine-combat-simulator/MWI-Hit-Tracker-Canvas-Szerra.user.js
 // ==/UserScript==
 (function (exports) {
 	'use strict';

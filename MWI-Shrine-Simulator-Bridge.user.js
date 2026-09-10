@@ -1,22 +1,22 @@
 // ==UserScript==
-// @name         MWI 神龕模擬器橋接器
-// @namespace    https://github.com/szerra/mwi-shrine-combat-simulator
+// @name         MWI 神龛模拟器桥接器
+// @namespace    https://github.com/Linsaey/mwi-shrine-combat-simulator
 // @version      1.0.3
-// @description  在遊戲內開啟神龕模擬器，並獨立擷取角色、隊伍、裝備、技能與神龕等級；不依賴 MWITools 或公會資料插件。
+// @description  在游戏内开启神龛模拟器，并独立撷取角色、队伍、装备、技能与神龛等级；不依赖 MWITools 或公会资料插件。
 // @author       Szerra adaptation; importer based on MWITools by bot7420, shykai, Stella
 // @license      CC-BY-NC-SA-4.0
 // @icon         https://www.milkywayidle.com/favicon.svg
-// @homepageURL  https://szerra.github.io/mwi-shrine-combat-simulator/
-// @supportURL   https://github.com/szerra/mwi-shrine-combat-simulator/issues
-// @updateURL    https://szerra.github.io/mwi-shrine-combat-simulator/MWI-Shrine-Simulator-Bridge.user.js
-// @downloadURL  https://szerra.github.io/mwi-shrine-combat-simulator/MWI-Shrine-Simulator-Bridge.user.js
+// @homepageURL  https://linsaey.github.io/mwi-shrine-combat-simulator/
+// @supportURL   https://github.com/Linsaey/mwi-shrine-combat-simulator/issues
+// @updateURL    https://linsaey.github.io/mwi-shrine-combat-simulator/MWI-Shrine-Simulator-Bridge.user.js
+// @downloadURL  https://linsaey.github.io/mwi-shrine-combat-simulator/MWI-Shrine-Simulator-Bridge.user.js
 // @match        https://www.milkywayidle.com/*
 // @match        https://milkywayidle.com/*
 // @match        https://test.milkywayidle.com/*
 // @match        https://www.milkywayidlecn.com/*
 // @match        https://milkywayidlecn.com/*
 // @match        https://test.milkywayidlecn.com/*
-// @match        https://szerra.github.io/mwi-shrine-combat-simulator/*
+// @match        https://linsaey.github.io/mwi-shrine-combat-simulator/*
 // @match        https://amvoidguy.github.io/MWICombatSimulatorTest/*
 // @match        http://127.0.0.1/*
 // @match        http://localhost/*
@@ -33,7 +33,7 @@
 
   const VERSION = "1.0.3";
   const PREFIX = "mwiShrineBridge_";
-  const SIMULATOR_URL = "https://szerra.github.io/mwi-shrine-combat-simulator/";
+  const SIMULATOR_URL = "https://linsaey.github.io/mwi-shrine-combat-simulator/";
   const GAME_SOCKET_HOSTS = [
     "api.milkywayidle.com/ws",
     "api-test.milkywayidle.com/ws",
@@ -117,7 +117,7 @@ function updatePersistentImportButton(button, prefix) {
       : `${prefix} | Character ${characterTime}`
     : prefix;
   button.title = runtime.config.isZH
-    ? `資料不會自動過期。角色：${characterTime || "尚未載入"}；隊友最舊：${profileTime || "無隊友快取"}；戰鬥快照：${battleTime || "無"}。重新整理遊戲頁面才更新角色與隊伍；重新開啟隊友名片才更新該隊友。`
+    ? `资料不会自动过期。角色：${characterTime || "尚未载入"}；队友最旧：${profileTime || "无队友快取"}；战斗快照：${battleTime || "无"}。重新整理游戏页面才更新角色与队伍；重新开启队友名片才更新该队友。`
     : `Data does not expire automatically. Character: ${characterTime || "not loaded"}; oldest teammate: ${profileTime || "no teammate cache"}; battle snapshot: ${battleTime || "none"}. Refresh the game to update the character and party; reopen a teammate profile to update that teammate.`;
 }
 
@@ -259,21 +259,21 @@ function addImportButtonForAmvoidguy() {
       button.id = "buttonMWIShrineBridgeImport";
       updatePersistentImportButton(
         button,
-        runtime.config.isZH ? "單人/組隊匯入" : "Import solo/group",
+        runtime.config.isZH ? "单人/组队汇入" : "Import solo/group",
       );
       button.style.padding = "5px";
       button.onclick = async function () {
         console.log(
           runtime.config.isZH
-            ? "[MWI 神龕橋接器] 已點擊戰鬥模擬器匯入按鈕。"
-            : "[MWI 神龕橋接器] Combat simulator import button clicked.",
+            ? "[MWI 神龛桥接器] 已点击战斗模拟器汇入按钮。"
+            : "[MWI 神龛桥接器] Combat simulator import button clicked.",
         );
         const getPriceButton = document.querySelector(`button#buttonGetPrices`);
         if (getPriceButton) {
           console.log(
             runtime.config.isZH
-              ? "[MWI 神龕橋接器] 正在重新整理戰鬥模擬器價格。"
-              : "[MWI 神龕橋接器] Refreshing combat simulator prices.",
+              ? "[MWI 神龛桥接器] 正在重新整理战斗模拟器价格。"
+              : "[MWI 神龛桥接器] Refreshing combat simulator prices.",
           );
           getPriceButton.click();
         }
@@ -282,7 +282,7 @@ function addImportButtonForAmvoidguy() {
           !GM_getValue("mwiShrineBridge_init_client_data", "")
         ) {
           button.textContent = runtime.config.isZH
-            ? "請先重新整理遊戲頁面"
+            ? "请先重新整理游戏页面"
             : "Refresh the game page first";
           button.style.backgroundColor = "#b02a37";
           return false;
@@ -292,12 +292,12 @@ function addImportButtonForAmvoidguy() {
         } catch (error) {
           console.error(
             runtime.config.isZH
-              ? "MWI 神龕橋接器匯入失敗"
+              ? "MWI 神龛桥接器汇入失败"
               : "MWI Shrine Bridge import failed",
             error,
           );
           button.textContent = runtime.config.isZH
-            ? "匯入失敗，請重新整理遊戲後再試"
+            ? "汇入失败，请重新整理游戏后再试"
             : "Import failed; refresh the game and retry";
           button.style.backgroundColor = "#b02a37";
         }
@@ -415,7 +415,7 @@ async function importDataForAmvoidguy(button) {
 
   updatePersistentImportButton(
     button,
-    runtime.config.isZH ? "已匯入" : "Imported",
+    runtime.config.isZH ? "已汇入" : "Imported",
   );
   if (!isParty) {
     setTimeout(() => {
@@ -503,8 +503,8 @@ function constructGroupExportObj() {
           if (profileList.length !== 1) {
             console.log(
               runtime.config.isZH
-                ? `[MWI 神龕橋接器] 找不到角色 ${member.characterID} 的已保存资料。`
-                : `[MWI 神龕橋接器] Cannot find a saved profile for character ${member.characterID}.`,
+                ? `[MWI 神龛桥接器] 找不到角色 ${member.characterID} 的已保存资料。`
+                : `[MWI 神龛桥接器] Cannot find a saved profile for character ${member.characterID}.`,
             );
             playerIDs[i - 1] = runtime.config.isZH
               ? "需要点开资料"
@@ -959,7 +959,7 @@ function constructPlayerExportObjFromStoredProfile(
       return true;
     } catch (error) {
       console.warn(
-        "[MWI 神龕橋接器 " + VERSION + "] 無法讀取遊戲共用資料快取",
+        "[MWI 神龛桥接器 " + VERSION + "] 无法读取游戏共用资料快取",
         error,
       );
       return false;
@@ -1138,7 +1138,7 @@ function constructPlayerExportObjFromStoredProfile(
     try {
       handleGamePayload(JSON.parse(value));
     } catch {
-      // 非 JSON 遊戲訊息不屬於橋接資料。
+      // 非 JSON 游戏讯息不属于桥接资料。
     }
   }
 
@@ -1146,7 +1146,7 @@ function constructPlayerExportObjFromStoredProfile(
     if (pageWindow.__mwiShrineBridgeSocketHookV1) return;
     const descriptor = Object.getOwnPropertyDescriptor(pageWindow.MessageEvent.prototype, "data");
     if (!descriptor?.get) {
-      console.warn("[MWI 神龕橋接器 " + VERSION + "] 找不到 MessageEvent.data getter");
+      console.warn("[MWI 神龛桥接器 " + VERSION + "] 找不到 MessageEvent.data getter");
       return;
     }
     const previousGet = descriptor.get;
@@ -1179,7 +1179,7 @@ function constructPlayerExportObjFromStoredProfile(
     ]) {
       GM_setValue(PREFIX + key, key === "profile_export_list" ? "[]" : "");
     }
-    console.info("[MWI 神龕橋接器] 已清除橋接器自己的快取；公會資料未變更。");
+    console.info("[MWI 神龛桥接器] 已清除桥接器自己的快取；公会资料未变更。");
   }
 
   function openShrineSimulator() {
@@ -1209,7 +1209,7 @@ function constructPlayerExportObjFromStoredProfile(
     link.style.color = runtime.config.SCRIPT_COLOR_MAIN;
     link.style.cursor = "pointer";
     link.textContent = runtime.config.isZH
-      ? "神龕戰鬥模擬器"
+      ? "神龛战斗模拟器"
       : "Shrine Combat Simulator";
     link.addEventListener("click", openShrineSimulator);
     link.addEventListener("keydown", (event) => {
@@ -1244,10 +1244,10 @@ function constructPlayerExportObjFromStoredProfile(
   }
 
   GM_registerMenuCommand(
-    runtime.config.isZH ? "開啟神龕戰鬥模擬器" : "Open Shrine Combat Simulator",
+    runtime.config.isZH ? "开启神龛战斗模拟器" : "Open Shrine Combat Simulator",
     openShrineSimulator,
   );
-  GM_registerMenuCommand("清除神龕模擬器橋接快取", clearBridgeCache);
+  GM_registerMenuCommand("清除神龛模拟器桥接快取", clearBridgeCache);
 
   const host = location.hostname.toLowerCase();
   const isGame = host.includes("milkywayidle");
@@ -1255,7 +1255,7 @@ function constructPlayerExportObjFromStoredProfile(
     installClientDataBootstrap();
     installSocketHook();
     installGameSimulatorEntry();
-    console.info("[MWI 神龕橋接器] " + VERSION + " 已開始讀取遊戲資料");
+    console.info("[MWI 神龛桥接器] " + VERSION + " 已开始读取游戏资料");
   } else {
     addImportButtonForAmvoidguy();
   }
