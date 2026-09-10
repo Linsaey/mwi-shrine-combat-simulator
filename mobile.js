@@ -112,4 +112,88 @@
     } else if (mq.addListener) {
         mq.addListener(setupCollapsibleCombatStats);
     }
+
+    // 手机端：专业等级（8 个）分成两列 —— 战斗/耐力/智力/攻击 一列，近战/防御/远程/魔法 一列
+    // 仅调整布局，元素 id / 数据不变，bundle.js 读写不受影响
+    function splitLevelsIntoColumns() {
+        if (!mq.matches) return;
+
+        var rows = document.querySelectorAll('.row:has(> .col-md-6 > input[id^="inputLevel_"])');
+        if (!rows.length) return;
+        var parent = rows[0].parentElement;
+        if (!parent || parent.dataset.mwLevelsDone) return;
+        parent.dataset.mwLevelsDone = '1';
+
+        var wrapper = document.createElement('div');
+        wrapper.style.cssText = 'display:flex;gap:10px;align-items:flex-start;';
+        var left = document.createElement('div');
+        var right = document.createElement('div');
+        left.style.cssText = 'flex:1 1 0%;min-width:0;';
+        right.style.cssText = 'flex:1 1 0%;min-width:0;';
+        wrapper.appendChild(left);
+        wrapper.appendChild(right);
+
+        parent.insertBefore(wrapper, rows[0]);
+        var half = Math.ceil(rows.length / 2);
+        Array.prototype.forEach.call(rows, function (r, i) {
+            (i < half ? left : right).appendChild(r);
+        });
+    }
+
+    // 手机端：食物 / 饮料 分成两列 —— 左列食物（标题+3 行），右列饮料（标题+3 行）
+    function splitFoodDrinksIntoColumns() {
+        if (!mq.matches) return;
+
+        var foodRows = document.querySelectorAll('.row:has(> .col > select[id^="selectFood_"])');
+        var drinkRows = document.querySelectorAll('.row:has(> .col > select[id^="selectDrink_"])');
+        if (!foodRows.length || !drinkRows.length) return;
+
+        var parent = foodRows[0].parentElement;
+        if (!parent || parent.dataset.mwFoodDrinksDone) return;
+
+        // 找区域标题行（该区第一行之前最近的 .row.mb-3）
+        function findTitle(row) {
+            var sib = row.previousElementSibling;
+            while (sib && !(sib.classList.contains('row') && sib.classList.contains('mb-3'))) {
+                sib = sib.previousElementSibling;
+            }
+            return sib;
+        }
+
+        var foodTitle = findTitle(foodRows[0]);
+        var drinkTitle = findTitle(drinkRows[0]);
+        if (!foodTitle || !drinkTitle || foodTitle === drinkTitle) return;
+        parent.dataset.mwFoodDrinksDone = '1';
+
+        var wrapper = document.createElement('div');
+        wrapper.style.cssText = 'display:flex;gap:10px;align-items:flex-start;';
+        var left = document.createElement('div');
+        var right = document.createElement('div');
+        left.style.cssText = 'flex:1 1 0%;min-width:0;';
+        right.style.cssText = 'flex:1 1 0%;min-width:0;';
+        wrapper.appendChild(left);
+        wrapper.appendChild(right);
+
+        parent.insertBefore(wrapper, foodTitle);
+
+        left.appendChild(foodTitle);
+        Array.prototype.forEach.call(foodRows, function (r) { left.appendChild(r); });
+
+        right.appendChild(drinkTitle);
+        Array.prototype.forEach.call(drinkRows, function (r) { right.appendChild(r); });
+    }
+
+    splitLevelsIntoColumns();
+    splitFoodDrinksIntoColumns();
+    if (mq.addEventListener) {
+        mq.addEventListener('change', function () {
+            splitLevelsIntoColumns();
+            splitFoodDrinksIntoColumns();
+        });
+    } else if (mq.addListener) {
+        mq.addListener(function () {
+            splitLevelsIntoColumns();
+            splitFoodDrinksIntoColumns();
+        });
+    }
 })();

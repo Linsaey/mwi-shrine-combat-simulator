@@ -1001,4 +1001,66 @@
         max-width: none;
         padding: 0;
     }
+
+    /* ===================== 装备栏：物品选择框列加宽（槽位 22% / 物品弹性 / 强化 20%） ===================== */
+    .row.mb-2:has(select[id^="selectEquipment_"]) > .col-md-2 {
+        flex: 0 0 22%;
+        max-width: 22%;
+    }
+
+    .row.mb-2:has(select[id^="selectEquipment_"]) > .col-md-4 {
+        flex: 0 0 20%;
+        max-width: 20%;
+    }
+
+    .row.mb-3:has(> .col-md-2):has(> .col-md-6):has(> .col-md-4) > .col-md-2 {
+        flex: 0 0 22%;
+        max-width: 22%;
+    }
+
+    .row.mb-3:has(> .col-md-2):has(> .col-md-6):has(> .col-md-4) > .col-md-4 {
+        flex: 0 0 20%;
+        max-width: 20%;
+    }
+
+    /* ===================== 模拟装备方案 + 导入/导出：总宽与开始模拟一致 ===================== */
+    .row:has(> .col-md-auto > #buttonEquipmentSets) {
+        gap: 6px;
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    /* ===================== 进度条：2 倍高，与按钮留出间隙 ===================== */
+    .row:has(#simulationProgressBar) {
+        gap: 8px;
+    }
+
+    .progress {
+        height: 24px;
+    }
+
+    /* ===================== 食物/饮料：Trigger 按钮缩短 ===================== */
+    #buttonFoodTrigger_0,
+    #buttonFoodTrigger_1,
+    #buttonFoodTrigger_2,
+    #buttonDrinkTrigger_0,
+    #buttonDrinkTrigger_1,
+    #buttonDrinkTrigger_2 {
+        padding: 8px 8px;
+        font-size: 13px;
+        min-height: 40px;
+    }
+
+    /* ===================== 7 个功能按钮：高度降为原来的 2/3 ===================== */
+    #buttonHouseRoomsModal,
+    #buttonAchievementsModal,
+    #buttonGuildCombatBuffsModal,
+    #buttonGetPrices,
+    #buttonEditPrices,
+    #buttonPatchNotes,
+    #buttonWipeEvents {
+        min-height: 30px;
+        padding: 4px 2px;
+        line-height: 1.3;
+    }
 }
