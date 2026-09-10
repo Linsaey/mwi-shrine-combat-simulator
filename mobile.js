@@ -250,12 +250,13 @@ function applyGuildSimplified() {
     function apply() {
         document.querySelectorAll('[data-i18n^="common:guildCombatBuffs"]').forEach(function (el) {
             var key = el.getAttribute('data-i18n');
-            if (map[key]) el.textContent = map[key];
+            if (map[key]) { el.textContent = map[key]; el.removeAttribute('data-i18n'); }
         });
         var btn = document.getElementById('buttonGuildCombatBuffsModal');
-        if (btn) btn.textContent = "公会";
+        if (btn) { btn.textContent = "公会"; btn.removeAttribute('data-i18n'); }
     }
-    if (document.readyState !== 'loading') { setTimeout(apply, 800); setTimeout(apply, 2500); }
-    else document.addEventListener('DOMContentLoaded', function () { setTimeout(apply, 800); setTimeout(apply, 2500); });
+    if (window.i18next && window.i18next.on) { try { window.i18next.on('initialized', apply); } catch (e) {} }
+    if (document.readyState !== 'loading') { setTimeout(apply, 300); setTimeout(apply, 1500); setTimeout(apply, 4000); }
+    else document.addEventListener('DOMContentLoaded', function () { setTimeout(apply, 300); setTimeout(apply, 1500); setTimeout(apply, 4000); });
 }
 applyGuildSimplified();
