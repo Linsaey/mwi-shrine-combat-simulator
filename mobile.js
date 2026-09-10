@@ -190,10 +190,18 @@
     splitLevelsIntoColumns();
     splitFoodDrinksIntoColumns();
 
-    // 手机端：模拟结果三项（法力消耗/生命恢复/法力恢复）数值移到标题同一行、右对齐
+    // 手机端：模拟结果 7 项（击杀/死亡/经验/消耗品/法力消耗/生命恢复/法力恢复）数值移到标题同一行、右对齐
     function inlineSimResultNumbers() {
         if (!mq.matches) return;
-        var ids = ['simulationResultManaUsed', 'simulationResultHealthRestored', 'simulationResultManaRestored'];
+        var ids = [
+            'simulationResultKills',
+            'simulationResultPlayerDeaths',
+            'simulationResultExperienceGain',
+            'simulationResultConsumablesUsed',
+            'simulationResultManaUsed',
+            'simulationResultHealthRestored',
+            'simulationResultManaRestored'
+        ];
         ids.forEach(function (id) {
             var div = document.getElementById(id);
             if (!div || div.dataset.mwInlineDone) return;
@@ -205,7 +213,28 @@
         });
     }
 
+    // 手机端：模拟结果重排——每秒恢复的法力值移到每小时经验值下面；每小时使用的消耗品移到总伤害上面
+    function reorderSimResultPanels() {
+        if (!mq.matches) return;
+        // 1) 每秒恢复的法力值 → 每小时经验值下面
+        var expDiv = document.getElementById('simulationResultExperienceGain');
+        var expBlock = expDiv ? (expDiv.closest('.mw-inline-row') || expDiv.previousElementSibling) : null;
+        var mrDiv = document.getElementById('simulationResultManaRestored');
+        var mrBlock = mrDiv ? (mrDiv.closest('.mw-inline-row') || mrDiv) : null;
+        if (expBlock && mrBlock && expBlock.parentNode && mrBlock.parentNode) {
+            expBlock.parentNode.insertBefore(mrBlock, expBlock.nextSibling);
+        }
+        // 2) 每小时使用的消耗品 → 总伤害（Damage Done Total 标题行）上面
+        var dmgTitle = document.querySelector('#simulationResultColumn2 > .row');
+        var cuDiv = document.getElementById('simulationResultConsumablesUsed');
+        var cuBlock = cuDiv ? (cuDiv.closest('.mw-inline-row') || cuDiv.previousElementSibling) : null;
+        if (dmgTitle && cuBlock && cuBlock.parentNode && dmgTitle.parentNode && cuBlock !== dmgTitle) {
+            dmgTitle.parentNode.insertBefore(cuBlock, dmgTitle);
+        }
+    }
+
     inlineSimResultNumbers();
+    reorderSimResultPanels();
     // 手机端：安装/更新两个按钮移到模拟器最底部（主容器末尾，战斗属性/模拟结果之后）
     function moveInstallButtonsToBottom() {
         if (!mq.matches) return;
@@ -236,6 +265,7 @@
             splitLevelsIntoColumns();
             splitFoodDrinksIntoColumns();
             inlineSimResultNumbers();
+            reorderSimResultPanels();
             moveInstallButtonsToBottom();
         });
     } else if (mq.addListener) {
@@ -243,6 +273,7 @@
             splitLevelsIntoColumns();
             splitFoodDrinksIntoColumns();
             inlineSimResultNumbers();
+            reorderSimResultPanels();
             moveInstallButtonsToBottom();
         });
     }
