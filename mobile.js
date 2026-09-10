@@ -93,10 +93,14 @@
 
         titleRow.style.cssText =
             'display:flex;align-items:center;justify-content:space-between;' +
-            'cursor:pointer;user-select:none;padding:6px 0;margin-bottom:0;';
+            'flex-wrap:nowrap;cursor:pointer;user-select:none;padding:6px 0;margin-bottom:0;';
+        var b = titleRow.querySelector('b');
+        if (b) {
+            b.style.cssText = 'flex:0 0 auto;width:auto;';
+        }
         var caret = document.createElement('span');
         caret.textContent = '▶';
-        caret.style.cssText = 'font-size:12px;color:#6c757d;';
+        caret.style.cssText = 'font-size:12px;color:#6c757d;flex:0 0 auto;width:auto;margin-left:auto;';
         titleRow.appendChild(caret);
 
         titleRow.addEventListener('click', function () {
@@ -185,15 +189,34 @@
 
     splitLevelsIntoColumns();
     splitFoodDrinksIntoColumns();
+
+    // 手机端：模拟结果三项（法力消耗/生命恢复/法力恢复）数值移到标题同一行、右对齐
+    function inlineSimResultNumbers() {
+        if (!mq.matches) return;
+        var ids = ['simulationResultManaUsed', 'simulationResultHealthRestored', 'simulationResultManaRestored'];
+        ids.forEach(function (id) {
+            var div = document.getElementById(id);
+            if (!div || div.dataset.mwInlineDone) return;
+            var row = div.previousElementSibling;
+            if (!row || !row.classList.contains('row')) return;
+            div.dataset.mwInlineDone = '1';
+            row.classList.add('mw-inline-row');
+            row.appendChild(div);
+        });
+    }
+
+    inlineSimResultNumbers();
     if (mq.addEventListener) {
         mq.addEventListener('change', function () {
             splitLevelsIntoColumns();
             splitFoodDrinksIntoColumns();
+            inlineSimResultNumbers();
         });
     } else if (mq.addListener) {
         mq.addListener(function () {
             splitLevelsIntoColumns();
             splitFoodDrinksIntoColumns();
+            inlineSimResultNumbers();
         });
     }
 })();
