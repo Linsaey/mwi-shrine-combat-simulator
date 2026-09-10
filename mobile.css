@@ -312,6 +312,68 @@
     }
 
     /* ===================== 模拟结果面板 ===================== */
+    /* 法力/生命/法力恢复 breakdown 明细行：名称/括号(数值)/数字 固定列宽对齐 */
+    #simulationResultManaUsed .row,
+    #simulationResultHealthRestored .row,
+    #simulationResultManaRestored .row {
+        display: flex;
+        flex-wrap: nowrap;
+        align-items: center;
+        gap: 4px;
+        margin-bottom: 2px;
+    }
+
+    #simulationResultManaUsed .row > div,
+    #simulationResultHealthRestored .row > div,
+    #simulationResultManaRestored .row > div {
+        flex: 0 0 auto;
+        width: auto !important;
+        padding: 2px;
+        font-size: 13px;
+    }
+
+    /* 法力值明细：名称(弹性) / (次数) / 数字右对齐 */
+    #simulationResultManaUsed .row > div:nth-child(1) {
+        flex: 1 1 50%;
+        min-width: 0;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    #simulationResultManaUsed .row > div:nth-child(2) {
+        flex: 0 0 27%;
+        text-align: left;
+    }
+
+    #simulationResultManaUsed .row > div:nth-child(3) {
+        flex: 0 0 23%;
+        text-align: right;
+        font-weight: 600;
+    }
+
+    /* 生命/法力恢复明细：名称(弹性) / 数值右对齐 / 百分比右对齐 */
+    #simulationResultHealthRestored .row > div:nth-child(1),
+    #simulationResultManaRestored .row > div:nth-child(1) {
+        flex: 1 1 50%;
+        min-width: 0;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    #simulationResultHealthRestored .row > div:nth-child(2),
+    #simulationResultManaRestored .row > div:nth-child(2) {
+        flex: 0 0 25%;
+        text-align: right;
+    }
+
+    #simulationResultHealthRestored .row > div:nth-child(3),
+    #simulationResultManaRestored .row > div:nth-child(3) {
+        flex: 0 0 25%;
+        text-align: right;
+    }
+
     /* 总伤害/总承受伤害表：四列固定分配，一行显示不换行 */
     #simulationResultColumn2 .row {
         display: flex;
