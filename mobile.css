@@ -477,29 +477,56 @@
         font-size: 13px;
     }
 
-    /* 列宽分配：来源(35%) / 命中率(22%) / DPS(25%) / %(18%)
-       （原 40/26/20/14：表头词少显空、DPS/% 数字列偏窄；重分配后数字列都有余量） */
+    /* 列宽分配：来源(42%) / 命中率(20%) / DPS(24%) / %(14%)
+       （来源列加宽并允许折行，保证长名称在任何浏览器/手机字号下都完整显示，
+       不再被 ellipsis 截断；数字列按剩余空间分配，仍放得下常用数值） */
     #simulationResultColumn2 .row > div:nth-child(1) {
-        flex: 1 1 35%;
+        flex: 1 1 42%;
         min-width: 0;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
+        white-space: normal;
+        overflow: visible;
+        text-overflow: clip;
+        line-height: 1.2;
     }
 
     #simulationResultColumn2 .row > div:nth-child(2) {
-        flex: 0 0 22%;
+        flex: 0 0 20%;
         text-align: right;
     }
 
     #simulationResultColumn2 .row > div:nth-child(3) {
-        flex: 0 0 25%;
+        flex: 0 0 24%;
         text-align: right;
     }
 
     #simulationResultColumn2 .row > div:nth-child(4) {
-        flex: 0 0 18%;
+        flex: 0 0 14%;
         text-align: right;
+    }
+
+    /* 手风琴内容区（每个敌人的伤害/承受伤害明细表）：
+       Bootstrap accordion-body 默认 20px 左右内边距会把来源列从 121px 压到 107px，
+       长名字显示不全且与表头不对齐。压缩内边距 + 负 margin 抵消 col 的 gutter padding，
+       让内容行与表头同起点同宽。 */
+    #simulationResultColumn2 .accordion {
+        margin-left: -12px;
+        margin-right: -13px;
+    }
+
+    #simulationResultColumn2 .accordion-body {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    #simulationResultColumn2 .accordion-body .row {
+        margin-left: -1px;
+        padding-right: 12px;
+        width: auto;
+    }
+
+    /* 内容行第一列与表头第一列同起点（12px 文字左缘） */
+    #simulationResultColumn2 .accordion-body .row > div:first-child {
+        padding-left: 12px;
     }
 
     #simulationResultTotalDamageDone,
