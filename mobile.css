@@ -357,6 +357,10 @@
         align-items: center;
         gap: 4px;
         margin-bottom: 2px;
+        /* Bootstrap .row 默认左右负 margin（-0.75rem）会让明细行在值区内
+           左右各溢出 12px（数值右缘 397~407px 超出视口 393px，右缘被截断） */
+        margin-left: 0 !important;
+        margin-right: 0 !important;
     }
 
     #simulationResultKills .row > div,
@@ -488,6 +492,42 @@
     #simulationResultColumn2 .row:first-child b,
     #simulationResultColumn2 b {
         font-size: 15px;
+    }
+
+    /* 消耗品块（reorderSimResultPanels 将其移入 #simulationResultColumn2 顶部）：
+       会被上方总伤害表列宽规则（26%/20%/14%）污染，导致整块偏右、值区被压到 102px。
+       强制还原为与 7 项指标一致的"标题 42% + 明细 58%"布局。 */
+    #simulationResultColumn2 .row.mw-inline-row > #simulationResultConsumablesUsed {
+        flex: 1 1 58% !important;
+        min-width: 0 !important;
+        width: auto !important;
+        max-width: none !important;
+        padding: 2px !important;
+        text-align: right;
+        font-weight: 600;
+    }
+
+    #simulationResultColumn2 #simulationResultConsumablesUsed .row {
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+
+    #simulationResultColumn2 #simulationResultConsumablesUsed .row > div:nth-child(1) {
+        flex: 0 0 50% !important;
+        width: auto !important;
+        max-width: none !important;
+        text-align: left !important;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    #simulationResultColumn2 #simulationResultConsumablesUsed .row > div:nth-child(2) {
+        flex: 0 0 50% !important;
+        width: auto !important;
+        max-width: none !important;
+        text-align: right !important;
+        font-weight: 600 !important;
     }
 
     /* ===================== HP/MP 图表 ===================== */
@@ -1193,23 +1233,37 @@
         display: none;
     }
 
-    /* ===================== 模拟结果：法力/生命恢复数值与标题同行、右对齐 ===================== */
+    /* ===================== 模拟结果：法力/生命恢复数值与标题同行、右对齐 =====================
+       A 全区统一起点：标题列固定 42%，值区（含全部明细）从 42% 处起，
+       消除"明细起点随标题长度游移"（截图里击杀 114px / 法力 156px / 消耗品 291px 的乱象）；
+       B 指标区之间细分隔线，区块边界清晰。 */
     .mw-inline-row {
         display: flex;
         align-items: center;
         justify-content: space-between;
         gap: 8px;
         flex-wrap: nowrap;
+        border-bottom: 1px solid rgba(128, 128, 128, 0.2);
+        padding-bottom: 4px;
+        margin-bottom: 6px;
+    }
+
+    body.dark-mode .mw-inline-row {
+        border-bottom-color: rgba(255, 255, 255, 0.18);
     }
 
     .mw-inline-row > b {
-        flex: 0 0 auto;
-        width: auto;
+        flex: 0 0 42%;
+        width: 42%;
+        min-width: 0;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
         font-size: 14px;
     }
 
     .mw-inline-row > div {
-        flex: 1 1 auto;
+        flex: 1 1 58%;
         min-width: 0;
         text-align: right;
         font-weight: 600;
