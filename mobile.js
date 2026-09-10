@@ -249,7 +249,17 @@
             var div = document.getElementById(id);
             if (!div || div.dataset.mwInlineDone) return;
             var row = div.previousElementSibling;
-            if (!row || !row.classList.contains('row')) return;
+            if (!row) return;
+            // 标题行可能是裸 <b>（如"每小时使用的消耗品"无 .row 包裹）：
+            // 先包一层 .row，再走标准流程（否则标题与值分离、值区被挤压）
+            if (row.tagName === 'B') {
+                var wrapper = document.createElement('div');
+                wrapper.className = 'row';
+                row.parentNode.insertBefore(wrapper, row);
+                wrapper.appendChild(row);
+                row = wrapper;
+            }
+            if (!row.classList.contains('row')) return;
             div.dataset.mwInlineDone = '1';
             row.classList.add('mw-inline-row');
             row.appendChild(div);
