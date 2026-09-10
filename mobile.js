@@ -206,17 +206,44 @@
     }
 
     inlineSimResultNumbers();
+    // 手机端：安装/更新两个按钮移到模拟器最底部（主容器末尾，战斗属性/模拟结果之后）
+    function moveInstallButtonsToBottom() {
+        if (!mq.matches) return;
+        var live = document.getElementById('buttonInstallLiveImporter');
+        var hit = document.getElementById('buttonInstallHitTrackerFix');
+        if (!live || !hit || live.dataset.mwMoved) return;
+        var container = document.querySelector('.container-fluid');
+        if (!container) return;
+        var wrap = document.createElement('div');
+        wrap.className = 'row mt-3';
+        wrap.style.justifyContent = 'center';
+        var c1 = document.createElement('div');
+        c1.className = 'col-md-auto';
+        c1.style.margin = '2px';
+        var c2 = document.createElement('div');
+        c2.className = 'col-md-auto';
+        c2.style.margin = '2px';
+        c1.appendChild(live);
+        c2.appendChild(hit);
+        wrap.appendChild(c1);
+        wrap.appendChild(c2);
+        container.appendChild(wrap);
+        live.dataset.mwMoved = '1';
+    }
+    moveInstallButtonsToBottom();
     if (mq.addEventListener) {
         mq.addEventListener('change', function () {
             splitLevelsIntoColumns();
             splitFoodDrinksIntoColumns();
             inlineSimResultNumbers();
+            moveInstallButtonsToBottom();
         });
     } else if (mq.addListener) {
         mq.addListener(function () {
             splitLevelsIntoColumns();
             splitFoodDrinksIntoColumns();
             inlineSimResultNumbers();
+            moveInstallButtonsToBottom();
         });
     }
 })();
