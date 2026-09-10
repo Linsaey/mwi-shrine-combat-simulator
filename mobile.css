@@ -341,7 +341,7 @@
         font-size: 13px;
     }
 
-    /* 名称列：全区统一 50% 左对齐 + 省略号 */
+    /* 名称列：全区统一 50% 左对齐（覆盖 mw-inline-row 继承的右对齐）+ 省略号 */
     #simulationResultKills .row > div:nth-child(1),
     #simulationResultPlayerDeaths .row > div:nth-child(1),
     #simulationResultExperienceGain .row > div:nth-child(1),
@@ -354,6 +354,7 @@
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+        text-align: left;
     }
 
     /* 2 列区（击杀/死亡/经验/消耗品）：数值列 50% 右对齐贴右 */
@@ -366,9 +367,18 @@
         font-weight: 600;
     }
 
-    /* 法力值区：名称50 / (次数)20 / 数字30 右对齐 */
+    /* 法力值区：名称40 / (次数)32 完整显示 / 数字28 右对齐 */
+    #simulationResultManaUsed .row > div:nth-child(1) {
+        flex: 0 0 40%;
+        min-width: 0;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        text-align: left;
+    }
+
     #simulationResultManaUsed .row > div:nth-child(2) {
-        flex: 0 0 20%;
+        flex: 0 0 32%;
         min-width: 0;
         white-space: nowrap;
         overflow: hidden;
@@ -377,7 +387,7 @@
     }
 
     #simulationResultManaUsed .row > div:nth-child(3) {
-        flex: 0 0 30%;
+        flex: 0 0 28%;
         text-align: right;
         font-weight: 600;
     }
